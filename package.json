@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "mockBackEnd2",
   "version": "1.0.0",
   "description": "",
@@ -9,11 +10,25 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rickyg218/mockBackEnd2.git"
+=======
+  "name": "gathernowbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AychDubya/gathernowbackend.git"
+>>>>>>> dev
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
+<<<<<<< HEAD
     "url": "https://github.com/rickyg218/mockBackEnd2/issues"
   },
   "homepage": "https://github.com/rickyg218/mockBackEnd2#readme",
@@ -26,5 +41,14 @@
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.4",
     "session": "^0.1.0"
+=======
+    "url": "https://github.com/AychDubya/gathernowbackend/issues"
+  },
+  "homepage": "https://github.com/AychDubya/gathernowbackend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
+>>>>>>> dev
   }
 }
