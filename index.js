@@ -17,7 +17,7 @@ app.use(cors({
  }));
 
 app.use(session({
-   secret:"keyboard cat",
+   secret:"keyboard cats",
    resolve:false,
    saveUninitialized:false,
    cookie:{
