@@ -1,6 +1,10 @@
 const express =require('express');
 const router = express.Router();
 const db = require("../models");
+const bcrypt = require("bcrypt");
+const session = require("express-session");
+// const {createRequireFromPath}=require ("module")
+
 
 router.get('/',(req,res)=>{
     db.users.findAll().then(users=>{
@@ -17,7 +21,8 @@ router.post("/",(req,res)=>{
        last_name:req.body.last_name,
        age:req.body.age,
        email:req.body.email,
-       phoneNumber:req.body.phoneNumber 
+       phoneNumber:req.body.phoneNumber,
+       password:req.body.password 
     }).then(newUser => {
         res.json(newUser);
     }).catch(err=>{
@@ -25,6 +30,39 @@ router.post("/",(req,res)=>{
         res.status(500).end();
     })
 })
+
+router.post("/logIn", (req, res) => {
+    console.log(req.body.email)
+    db.users.findOne({
+    
+        where:{
+            email:req.body.email
+        }
+    }).then(users => {
+       if(!users){
+           res.status(404).send("This user does not exist!");
+       }else{
+           if(bcrypt.compareSync(req.body.password,users.password)){
+               req.session.user ={
+                first_name:users.first_name,
+                email:users.email,
+                id:users.id
+               }
+               res.send(req.session.user);
+           }else{
+               res.status(401).send("wrong password ")
+        }
+       } 
+    }).catch(err => {
+        console.log(err);
+        res.status(500).end();
+    })
+})
+
+router.get('/readsessions',(req,res)=>{
+    res.json(req.session);
+})
+
 
 router.put("/update/:id", function (req, res) {
 
