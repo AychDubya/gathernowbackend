@@ -1,4 +1,4 @@
-const express =require('express');
+const express = require('express');
 const router = express.Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
@@ -6,49 +6,52 @@ const session = require("express-session");
 // const {createRequireFromPath}=require ("module")
 
 
-router.get('/',(req,res)=>{
-    db.events.findAll().then(events=>{
+router.get('/', (req, res) => {
+    db.events.findAll().then(events => {
         res.json(events)
-    }).catch(err=>{
+    }).catch(err => {
         console.log(err);
         res.status(500).end()
-    })
-})
+    });
+});
 
-router.post("/",(req,res)=>{
+router.post("/", (req, res) => {
+    console.log(req.body);
     db.events.create({
-       event_name:req.body.event_name,
-       event_location:req.body.event_location,
-       time:req.body.time,
-       meeting_spot:req.body.meeting_spot,
-       event_category:req.body.event_category,
-       num_of_attendees:req.body.num_of_attendees 
+        time: req.body.time,
+        event_category: req.body.event_category,
+        event_name: req.body.event_name,
+        event_location: req.body.event_location,
+        meeting_spot: req.body.meeting_spot,
+        num_of_attendees: parseInt(req.body.num_of_attendees),
+        min_age: parseInt(req.body.min_age),
+        additional_info: req.body.additional_info
     }).then(newEvent => {
         res.json(newEvent);
-    }).catch(err=>{
+    }).catch(err => {
         console.log(err);
         res.status(500).end();
-    })
-})
+    });
+});
 
 
 
-router.get('/readsessions',(req,res)=>{
+router.get('/readsessions', (req, res) => {
     res.json(req.session);
-})
+});
 
 
 router.put("/update/:id", function (req, res) {
-
-    db.events.update(
-        {
-            event_name:req.body.event_name,
-            event_location:req.body.event_location,
-            time:req.body.time,
-            meeting_spot:req.body.meeting_spot,
-            event_category:req.body.event_category,
-            num_of_attendees:req.body.num_of_attendees 
-        },
+    db.events.update({
+        time: req.body.time,
+        event_category: req.body.event_category,
+        event_name: req.body.event_name,
+        event_location: req.body.event_location,
+        meeting_spot: req.body.meeting_spot,
+        num_of_attendees: parseInt(req.body.num_of_attendees),
+        min_age: parseInt(req.body.min_age),
+        additional_info: req.body.additional_info
+    },
         {
             where: {
                 id: req.params.id
@@ -63,11 +66,20 @@ router.put("/update/:id", function (req, res) {
 
 router.delete("/delete/:id", function (req, res) {
     db.events.destroy({
+        time: req.body.time,
+        event_category: req.body.event_category,
+        event_name: req.body.event_name,
+        event_location: req.body.event_location,
+        meeting_spot: req.body.meeting_spot,
+        num_of_attendees: parseInt(req.body.num_of_attendees),
+        min_age: parseInt(req.body.min_age),
+        additional_info: req.body.additional_info
+    }, {
         where: {
             id: req.params.id
         }
     }).then(function (dbEvents) {
-        res.json(`deleted event: ${req.params.id}. Create a new event to have some fun!`);
+        res.json(dbEvents);
     }).catch(function (err) {
         res.status(500).json(err);
     });
