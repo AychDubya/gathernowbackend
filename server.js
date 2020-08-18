@@ -1,23 +1,39 @@
 const express = require("express");
-const mySQL = require("mySQL");
+// const mySQL = require("mySQL");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
 const app = express();
+const cors = require("cors");
+const session = require('express-session');
 
-// Defining middleware
+var allRoutes = require('./controllers');
+
+var db = require('./models');
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Serving static assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  credentials: true
+}))
 
-// Sending every other request to gathernow
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+app.use(session({
+  secret: "keyboard cat",
+  resolve: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 2 * 60 * 60 * 1000
+  }
+}))
 
-app.listen(PORT, () => {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
-});
+app.use('/', allRoutes);
+
+db.sequelize.sync({ force: false }).then(function () {
+  app.listen(PORT, function () {
+    console.log('App Listening on PORT' + PORT);
+  });
+
+})
+
+
