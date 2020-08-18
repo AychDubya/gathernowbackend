@@ -31,7 +31,7 @@ router.post("/",(req,res)=>{
     })
 })
 
-router.post("/logIn", (req, res) => {
+router.post("/login", (req, res) => {
     console.log(req.body.email)
     db.users.findOne({
     
