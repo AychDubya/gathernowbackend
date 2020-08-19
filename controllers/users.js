@@ -15,7 +15,7 @@ router.get('/',(req,res)=>{
     })
 })
 
-router.post("/",(req,res)=>{
+router.post("/createAccount",(req,res)=>{
     db.users.create({
        first_name:req.body.first_name,
        last_name:req.body.last_name,
