@@ -15,7 +15,8 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/CreateEvent", (req, res) => {
+
     console.log(req.body);
     db.events.create({
         time: req.body.time,
@@ -34,12 +35,9 @@ router.post("/", (req, res) => {
     });
 });
 
-
-
 router.get('/readsessions', (req, res) => {
     res.json(req.session);
 });
-
 
 router.put("/update/:id", function (req, res) {
     db.events.update({
