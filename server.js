@@ -20,7 +20,6 @@ app.use(cors({
 
 app.use(session({
   secret: "keyboard cat",
-  resolve: false,
   saveUninitialized: false,
   cookie: {
     maxAge: 2 * 60 * 60 * 1000

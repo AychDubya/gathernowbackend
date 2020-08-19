@@ -60,6 +60,7 @@ router.post("/login", (req, res) => {
 })
 
 router.get('/readsessions',(req,res)=>{
+    console.log(req.session)
     res.json(req.session);
 })
 
