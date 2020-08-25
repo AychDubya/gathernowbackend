@@ -28,11 +28,13 @@ app.use(session({
 
 app.use('/', allRoutes);
 
-db.sequelize.sync({ force: false }).then(function () {
-  app.listen(PORT, function () {
-    console.log('App Listening on PORT' + PORT);
-  });
+db.sequelize.sync({force:false}).then(function(){
+  const server = app.listen(PORT);
+  const io = require('socket.io')(server);
+  io.on('connection', socket => {
+      console.log('client connected');
+  })
 
-})
+});
 
 
